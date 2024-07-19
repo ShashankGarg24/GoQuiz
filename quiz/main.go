@@ -1,33 +1,26 @@
 package main
 
 import (
-	"flag"
+	"GoQuiz/quiz/utils"
 	"fmt"
-	"os"
 )
 
 func main() {
-	quizFileName := fetchFileName()
-	quizFile := loadFile(quizFileName)
-	fmt.Print(quizFile)
+	quizFileName := utils.FetchFileName()
+	quizFile := utils.LoadFile(quizFileName)
+	problems := utils.LoadProblemsFromFile(quizFile)
 
-}
-
-func fetchFileName() string {
-	fileName := flag.String("csv", DEFAULT_FILE, CSV_HELP)
-	flag.Parse()
-	return *fileName
-}
-
-func loadFile(name string) *os.File {
-	file, err := os.Open(QUIZ_PATH + name)
-	if err != nil {
-		gracefulExit(fmt.Sprintf("Error in opening the CSV file: %s", err))
+	correctAnswers := 0
+	for i, problem := range problems {
+		fmt.Printf("Problem #%d: %s\n", (i + 1), problem.Question)
+		var answer string
+		fmt.Scanf("%s\n", &answer)
+		if answer == problem.Answer {
+			fmt.Printf("Correct Answer!\n")
+			correctAnswers++
+		} else {
+			fmt.Printf("Incorrect Answer!\n")
+		}
 	}
-	return file
-}
-
-func gracefulExit(msg string) {
-	fmt.Printf(msg)
-	os.Exit(1)
+	fmt.Printf("You scored %d out of %d.", correctAnswers, len(problems))
 }
