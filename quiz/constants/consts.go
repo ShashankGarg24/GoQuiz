@@ -1,4 +1,4 @@
-package main
+package constants
 
 const (
 	DEFAULT_FILE = "math-problems.csv"
