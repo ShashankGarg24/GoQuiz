@@ -6,6 +6,6 @@ import (
 )
 
 func gracefulExit(msg string) {
-	fmt.Printf(msg)
+	fmt.Print(msg)
 	os.Exit(1)
 }

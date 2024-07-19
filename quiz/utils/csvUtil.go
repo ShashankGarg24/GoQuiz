@@ -7,6 +7,7 @@ import (
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 )
 
 func FetchFileName() string {
@@ -37,8 +38,8 @@ func parseLines(lines [][]string) []models.Problem {
 	problems := make([]models.Problem, len(lines))
 	for i, line := range lines {
 		problems[i] = models.Problem{
-			Question: line[0],
-			Answer:   line[1],
+			Question: strings.TrimSpace(line[0]),
+			Answer:   strings.TrimSpace(line[1]),
 		}
 	}
 	return problems
