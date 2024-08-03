@@ -14,6 +14,8 @@ func main() {
 
 	timer := time.NewTimer(time.Duration(quizTimeLimit) * time.Second)
 	correctAnswers := 0
+
+questionLoop:
 	for i, problem := range problems {
 		fmt.Printf("Problem #%d: %s\n", (i + 1), problem.Question)
 
@@ -27,10 +29,9 @@ func main() {
 		select {
 		case <-timer.C:
 			fmt.Printf("Time's up!\n")
-			fmt.Printf("You scored %d out of %d.", correctAnswers, len(problems))
-			return
-		case answer := <- answerChannel:
-			
+			break questionLoop
+		case answer := <-answerChannel:
+
 			if answer == problem.Answer {
 				fmt.Printf("Correct Answer!\n")
 				correctAnswers++
