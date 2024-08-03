@@ -56,3 +56,18 @@ func parseLines(lines [][]string) []models.Problem {
 	}
 	return problems
 }
+
+func GetUserInput(channel chan string) {
+	var answer string
+	fmt.Scanf("%s\n", &answer)
+	channel <- answer
+}
+
+func EvaluateAnswer(input string, actualAnswer string) bool {
+	if input == actualAnswer {
+		fmt.Printf("Correct Answer!\n")
+		return true
+	}
+	fmt.Printf("Incorrect Answer!\n")
+	return false
+}

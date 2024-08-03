@@ -8,7 +8,6 @@ import (
 
 func main() {
 	quizFileName, quizTimeLimit := utils.InitializeFlags()
-	fmt.Printf("time%d", quizTimeLimit)
 	quizFile := utils.LoadFile(quizFileName)
 	problems := utils.LoadProblemsFromFile(quizFile)
 
@@ -20,23 +19,15 @@ questionLoop:
 		fmt.Printf("Problem #%d: %s\n", (i + 1), problem.Question)
 
 		answerChannel := make(chan string)
-		go func() {
-			var answer string
-			fmt.Scanf("%s\n", &answer)
-			answerChannel <- answer
-		}()
+		go utils.GetUserInput(answerChannel)
 
 		select {
 		case <-timer.C:
 			fmt.Printf("Time's up!\n")
 			break questionLoop
 		case answer := <-answerChannel:
-
-			if answer == problem.Answer {
-				fmt.Printf("Correct Answer!\n")
+			if utils.EvaluateAnswer(answer, problem.Answer) {
 				correctAnswers++
-			} else {
-				fmt.Printf("Incorrect Answer!\n")
 			}
 		}
 	}
