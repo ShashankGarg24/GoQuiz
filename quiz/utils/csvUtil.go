@@ -10,10 +10,22 @@ import (
 	"strings"
 )
 
+func InitializeFlags() (string, int) {
+	fileName := FetchFileName()
+	timeLimit := FetchTimeLimit()
+	flag.Parse()
+
+	return fileName, timeLimit
+}
+
 func FetchFileName() string {
 	fileName := flag.String("csv", constants.DEFAULT_FILE, constants.CSV_HELP)
-	flag.Parse()
 	return *fileName
+}
+
+func FetchTimeLimit() int {
+	timeLimit := flag.Int("time", constants.DEFAULT_TIME, constants.TIME_HELP)
+	return *timeLimit
 }
 
 func LoadFile(name string) *os.File {

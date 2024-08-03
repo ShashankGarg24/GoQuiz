@@ -6,7 +6,8 @@ import (
 )
 
 func main() {
-	quizFileName := utils.FetchFileName()
+	quizFileName, quizTimeLimit := utils.InitializeFlags()
+	fmt.Printf("time%d", quizTimeLimit)
 	quizFile := utils.LoadFile(quizFileName)
 	problems := utils.LoadProblemsFromFile(quizFile)
 
